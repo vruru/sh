@@ -2,18 +2,34 @@
 
 set -e
 
+# 打开 root 远程登录 SSH 的权限，并随机更改 root 密码
+echo "1. 打开 root 远程登录 SSH 权限 (可选)"
+read -p "是否要打开 root 远程登录 SSH 权限并随机更改密码? (Y/N): " choice
+if [ "$choice" == "Y" ] || [ "$choice" == "y" ]; then
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+    service ssh restart
+    new_password=$(openssl rand -base64 12)
+    echo "root:$new_password" | chpasswd
+    echo "已设置新的 root 密码为: $new_password"
+fi
+
 # 取消对连接数的限制
-echo "1. 取消对连接数的限制"
+echo "2. 取消对连接数的限制"
 echo "*               soft    nofile          65535" >> /etc/security/limits.conf
 echo "*               hard    nofile          65535" >> /etc/security/limits.conf
 
 # 关闭 swap 虚拟内存
-echo "2. 关闭 swap 虚拟内存"
+echo "3. 关闭 swap 虚拟内存"
 swapoff -a
 sed -i '/swap/d' /etc/fstab
 
+# 安装指定软件
+echo "4. 安装 wget、curl、iperf3 和 net-tools"
+apt-get update
+apt-get install -y wget curl iperf3 net-tools
+
 # 系统优化
-echo "3. 系统优化"
+echo "5. 系统优化"
 cat << EOF >> /etc/sysctl.conf
 fs.file-max=1000000
 net.core.default_qdisc=fq
@@ -71,21 +87,5 @@ net.ipv4.udp_mem=262144 524288 1048576
 EOF
 
 sysctl -p
-
-# 打开 root 远程登录 SSH 的权限，并随机更改 root 密码
-echo "4. 打开 root 远程登录 SSH 权限 (可选)"
-read -p "是否要打开 root 远程登录 SSH 权限并随机更改密码? (Y/N): " choice
-if [ "$choice" == "Y" ] || [ "$choice" == "y" ]; then
-    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
-    service ssh restart
-    new_password=$(openssl rand -base64 12)
-    echo "root:$new_password" | chpasswd
-    echo "已设置新的 root 密码为: $new_password"
-fi
-
-# 安装指定软件
-echo "5. 安装 wget、curl、iperf3 和 net-tools"
-apt-get update
-apt-get install -y wget curl iperf3 net-tools
 
 echo "优化完成。"
