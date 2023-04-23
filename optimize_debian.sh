@@ -58,7 +58,6 @@ net.ipv4.tcp_max_syn_backlog=262144
 net.core.netdev_max_backlog=32768
 net.core.somaxconn=32768
 net.ipv4.tcp_notsent_lowat=16384
-net.ipv4_timestamps=0
 net.ipv4.tcp_keepalive_time=600
 net.ipv4.tcp_keepalive_probes=5
 net.ipv4.tcp_keepalive_intvl=15
