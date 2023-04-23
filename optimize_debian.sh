@@ -24,9 +24,9 @@ swapoff -a
 sed -i '/swap/d' /etc/fstab
 
 # 安装指定软件
-echo "4. 安装 wget、curl、iperf3 和 net-tools"
+echo "4. 安装 wget、curl、iperf3、net-tools、dnsutils"
 apt-get update
-apt-get install -y wget curl iperf3 net-tools
+apt-get install -y wget curl iperf3 net-tools dnsutils
 
 # 系统优化
 echo "5. 系统优化"
