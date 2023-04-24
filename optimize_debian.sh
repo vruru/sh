@@ -6,11 +6,12 @@ set -e
 echo "1. 打开 root 远程登录 SSH 权限 (可选)"
 read -p "是否要打开 root 远程登录 SSH 权限并随机更改密码? (Y/N): " choice
 if [ "$choice" == "Y" ] || [ "$choice" == "y" ]; then
-    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
-    service ssh restart
+    sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config
+    sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config
     new_password=$(openssl rand -base64 12)
     echo "root:$new_password" | chpasswd
     echo "已设置新的 root 密码为: $new_password"
+    service ssh restart
 fi
 
 # 取消对连接数的限制
