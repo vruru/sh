@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # 打开 root 远程登录 SSH 的权限，并随机更改 root 密码
 echo "1. 打开 root 远程登录 SSH 权限 (可选)"
 read -p "是否要打开 root 远程登录 SSH 权限并随机更改密码? (Y/N): " choice
