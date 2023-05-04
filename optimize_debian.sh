@@ -24,13 +24,8 @@ echo "3. 关闭 swap 虚拟内存"
 swapoff -a
 sed -i '/swap/d' /etc/fstab
 
-# 安装指定软件
-echo "4. 安装 wget、curl、iperf3、net-tools、dnsutils"
-apt-get update
-apt-get install -y wget curl iperf3 net-tools dnsutils
-
 # 系统优化
-echo "5. 系统优化"
+echo "4. 系统优化"
 cat << EOF >> /etc/sysctl.conf
 fs.file-max=2097152
 net.core.default_qdisc=fq
@@ -104,3 +99,8 @@ EOF
 sysctl -p
 
 echo "优化完成。"
+
+# 安装指定软件
+echo "5. 安装 wget、curl、iperf3、net-tools、dnsutils"
+apt-get update
+apt-get install -y wget curl iperf3 net-tools dnsutils
