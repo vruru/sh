@@ -101,6 +101,6 @@ sysctl -p
 echo "优化完成。"
 
 # 安装指定软件
-echo "5. 安装 wget、curl、iperf3、net-tools、dnsutils"
+echo "5. 安装 wget、curl、iperf3、net-tools、dnsutil"
 apt-get update
 apt-get install -y wget curl iperf3 net-tools dnsutils
