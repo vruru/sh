@@ -95,9 +95,7 @@ net.ipv4.tcp_keepalive_time=600
 net.ipv4.tcp_keepalive_probes=5
 net.ipv4.tcp_keepalive_intvl=30
 EOF
-
 sysctl -p
-
 echo "优化完成。"
 
 # 安装指定软件
